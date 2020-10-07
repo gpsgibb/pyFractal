@@ -187,6 +187,7 @@ class configurePopup(QtWidgets.QDialog):
                 devicelist.append("Device: "+d["name"])
             
             if len(devices) > 0:
+                self.deviceChooser.clear()
                 self.deviceChooser.setPlaceholderText("--select device--")
                 self.deviceChooser.addItems(devicelist)
                 self.deviceChooser.setEnabled(True)

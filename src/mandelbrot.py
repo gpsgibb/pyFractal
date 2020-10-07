@@ -93,14 +93,16 @@ class Mandelbrot():
         copyevt=cl.enqueue_copy(self.queue,img,imgBuf)
 
         img = img.reshape((nx,ny))
+        try:
+            tstart=event.get_profiling_info(cl.profiling_info.START)
+            tstop = event.get_profiling_info(cl.profiling_info.END)
+            print("Kernel execution time = %f ms"%((tstop-tstart)/1E6))
 
-        tstart=event.get_profiling_info(cl.profiling_info.START)
-        tstop = event.get_profiling_info(cl.profiling_info.END)
-        print("Kernel execution time = %f ms"%((tstop-tstart)/1E6))
-
-        tstart=copyevt.get_profiling_info(cl.profiling_info.START)
-        tstop = copyevt.get_profiling_info(cl.profiling_info.END)
-        print("Copy time = %f ms"%((tstop-tstart)/1E6))
+            tstart=copyevt.get_profiling_info(cl.profiling_info.START)
+            tstop = copyevt.get_profiling_info(cl.profiling_info.END)
+            print("Copy time = %f ms"%((tstop-tstart)/1E6))
+        except cl._cl.RuntimeError as e:
+            print(e)
         
         return img
 
@@ -138,13 +140,16 @@ class Mandelbrot():
 
         rimg = rimg.reshape((nx,ny))
 
-        tstart=event.get_profiling_info(cl.profiling_info.START)
-        tstop = event.get_profiling_info(cl.profiling_info.END)
-        print("Kernel execution time = %f ms"%((tstop-tstart)/1E6))
+        try:
+            tstart=event.get_profiling_info(cl.profiling_info.START)
+            tstop = event.get_profiling_info(cl.profiling_info.END)
+            print("Kernel execution time = %f ms"%((tstop-tstart)/1E6))
 
-        tstart=copyevt.get_profiling_info(cl.profiling_info.START)
-        tstop = copyevt.get_profiling_info(cl.profiling_info.END)
-        print("Copy time = %f ms"%((tstop-tstart)/1E6))
+            tstart=copyevt.get_profiling_info(cl.profiling_info.START)
+            tstop = copyevt.get_profiling_info(cl.profiling_info.END)
+            print("Copy time = %f ms"%((tstop-tstart)/1E6))
+        except cl._cl.RuntimeError as e:
+            print(e)
 
         # print(rimg.max(), rimg.min())
         
